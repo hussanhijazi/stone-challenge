@@ -1,7 +1,7 @@
 package br.com.hussan.stonechallenge.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import br.com.hussan.stonechallenge.domain.Repo
+import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.mock
 import br.com.hussan.stonechallenge.usecases.GetRepos
 import io.reactivex.Observable
@@ -12,7 +12,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 
 
-class RepoViewModelTest {
+class FactsViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -30,7 +30,7 @@ class RepoViewModelTest {
 
         val user = "hussanhijazi"
 
-        val repos = listOf(Repo(""))
+        val repos = listOf(Fact(""))
 
         `when`(getRepos.invoke(user)).thenReturn(Observable.fromArray(repos))
 
