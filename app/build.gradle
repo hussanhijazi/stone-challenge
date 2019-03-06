@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "br.com.hussan.myarchstone2"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+ext {
+    //dependencies
+    appCompatVersion = '1.1.0-alpha02'
+//    kotlinVersion = '1.3.21'
+//    koinVersion = '1.0.2'
+
+    androidxCode = '1.1.0-alpha04'
+    constraintLayoutVersion = '1.1.3'
+    viewModelVersion = '2.0.0'
+
+    jUnitVersion = '4.12'
+    runnerVersion = '1.1.2-alpha01'
+    expressoVersion = '3.1.2-alpha01'
+}
+dependencies {
+
+    implementation project(':data')
+    implementation project(':usecases')
+    implementation project(':domain')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.core:core-ktx:$androidxCode"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$viewModelVersion"
+
+    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "org.mockito:mockito-inline:2.24.5"
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
+    androidTestImplementation "androidx.test:runner:$runnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$expressoVersion"
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+}
