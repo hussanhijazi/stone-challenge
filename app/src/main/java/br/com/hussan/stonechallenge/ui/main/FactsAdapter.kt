@@ -8,7 +8,7 @@ import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.databinding.ListItemFactBinding
 import br.com.hussan.stonechallenge.domain.Fact
 
-class FactsAdapter :
+class FactsAdapter(private val clickListenerShare: (Fact) -> Unit) :
     RecyclerView.Adapter<FactsAdapter.FactViewHolder>() {
 
     private var facts: List<Fact> = listOf()
@@ -30,6 +30,10 @@ class FactsAdapter :
 
     override fun onBindViewHolder(holder: FactViewHolder, position: Int) {
         holder.binding.fact = facts[position]
+
+        holder.binding.imgFactShare.setOnClickListener {
+            clickListenerShare.invoke(facts[position])
+        }
     }
 
     override fun getItemCount() = facts.size
