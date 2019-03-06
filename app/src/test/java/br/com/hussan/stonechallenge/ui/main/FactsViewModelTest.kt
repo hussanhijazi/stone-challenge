@@ -17,7 +17,6 @@ class FactsViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val getRepos: GetFacts = mock()
-    //    private val dataSource: FactDatasource = mock()
     private lateinit var mViewModel: FactsViewModel
 
     @Before
@@ -28,18 +27,18 @@ class FactsViewModelTest {
     @Test
     fun `Get User repositories when OK`() {
 
-        val user = "hussanhijazi"
+        val query = "car"
 
         val repos = listOf(Fact(""))
 
-        `when`(getRepos.invoke(user)).thenReturn(Observable.fromArray(repos))
+        `when`(getRepos.invoke(query)).thenReturn(Observable.fromArray(repos))
 
-        mViewModel.getRepos(user)
+        mViewModel.getFacts(query)
             .test()
             .assertValue(repos)
             .assertComplete()
 
-        verify(getRepos).invoke(user)
+        verify(getRepos).invoke(query)
 
     }
 
@@ -47,11 +46,11 @@ class FactsViewModelTest {
     fun `User repositories when error`() {
 
         val exception = Exception()
-        val user = "hussanhijazi"
+        val query = "car"
 
-        `when`(getRepos.invoke(user)).thenReturn(Observable.error(exception))
+        `when`(getRepos.invoke(query)).thenReturn(Observable.error(exception))
 
-        mViewModel.getRepos(user)
+        mViewModel.getFacts(query)
             .test()
             .assertError(exception)
 
