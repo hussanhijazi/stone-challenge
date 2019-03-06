@@ -18,11 +18,11 @@ class RepoViewModelTest {
 
     private val getRepos: GetRepos = mock()
     //    private val dataSource: RepoDatasource = mock()
-    private lateinit var mViewModel: RepoViewModel
+    private lateinit var mViewModel: MainViewModel
 
     @Before
     fun setUp() {
-        mViewModel = RepoViewModel(getRepos)
+        mViewModel = MainViewModel(getRepos)
     }
 
     @Test
