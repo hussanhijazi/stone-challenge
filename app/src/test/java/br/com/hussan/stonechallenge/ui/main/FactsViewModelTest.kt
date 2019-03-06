@@ -3,7 +3,7 @@ package br.com.hussan.stonechallenge.ui.main
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.mock
-import br.com.hussan.stonechallenge.usecases.GetRepos
+import br.com.hussan.stonechallenge.usecases.GetFacts
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Rule
@@ -16,13 +16,13 @@ class FactsViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val getRepos: GetRepos = mock()
-    //    private val dataSource: RepoDatasource = mock()
-    private lateinit var mViewModel: MainViewModel
+    private val getRepos: GetFacts = mock()
+    //    private val dataSource: FactDatasource = mock()
+    private lateinit var mViewModel: FactsViewModel
 
     @Before
     fun setUp() {
-        mViewModel = MainViewModel(getRepos)
+        mViewModel = FactsViewModel(getRepos)
     }
 
     @Test

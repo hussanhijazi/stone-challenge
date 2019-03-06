@@ -1,10 +1,10 @@
 package br.com.hussan.stonechallenge.data.di
 
-import br.com.hussan.stonechallenge.data.datasource.RepoDatasource
-import br.com.hussan.stonechallenge.data.datasource.RepoRepository
+import br.com.hussan.stonechallenge.data.datasource.FactDatasource
+import br.com.hussan.stonechallenge.data.datasource.FactRepository
 import org.koin.dsl.module.module
 
 val dataModule = module {
     // single instance of HelloRepository
-    single<RepoDatasource> { RepoRepository(get()) }
+    single<FactDatasource> { FactRepository(get()) }
 }

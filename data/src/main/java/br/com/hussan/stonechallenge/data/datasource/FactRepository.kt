@@ -4,13 +4,13 @@ import br.com.hussan.stonechallenge.data.AppApi
 import br.com.hussan.stonechallenge.domain.Fact
 import io.reactivex.Observable
 
-class RepoRepository(private val api: AppApi) : RepoDatasource {
+class FactRepository(private val api: AppApi) : FactDatasource {
 
-    override fun getRepos(user: String): Observable<List<Fact>> {
-        return api.listRepos(user)
+    override fun getFacts(query: String): Observable<List<Fact>> {
+        return api.getFacts(query)
     }
 }
 
-interface RepoDatasource {
-    fun getRepos(user: String): Observable<List<Fact>>
+interface FactDatasource {
+    fun getFacts(user: String): Observable<List<Fact>>
 }
