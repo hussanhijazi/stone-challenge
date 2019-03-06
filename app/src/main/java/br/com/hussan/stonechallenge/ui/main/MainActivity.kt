@@ -1,6 +1,9 @@
 package br.com.hussan.stonechallenge.ui.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.extensions.add
@@ -26,6 +29,23 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ factsAdapter.setItems(it) }, { showError() })
             .add(compositeDisposable)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.search -> {
+                // TODO go to search Activity
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun showError() {
