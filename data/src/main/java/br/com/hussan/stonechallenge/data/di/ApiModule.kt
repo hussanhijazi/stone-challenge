@@ -6,16 +6,13 @@ import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 val apiModule = module {
     single {
-        createWebService<AppApi>(get(), "https://api.github.com/")
+        createWebService<AppApi>(get(), "https://api.chucknorris.io/")
     }
     factory {
         OkHttpClient.Builder()
-            .connectTimeout(60L, TimeUnit.SECONDS)
-            .readTimeout(60L, TimeUnit.SECONDS)
             .build()
     }
 }

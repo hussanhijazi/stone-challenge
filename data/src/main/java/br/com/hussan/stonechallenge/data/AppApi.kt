@@ -1,11 +1,10 @@
 package br.com.hussan.stonechallenge.data
 
-import br.com.hussan.stonechallenge.domain.Fact
 import io.reactivex.Observable
 import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AppApi {
-    @GET("users/{user}/repos")
-    fun getFacts(@Path("user") user: String): Observable<List<Fact>>
+    @GET("jokes/search")
+    fun getFacts(@Query("query") query: String): Observable<FactsResponse>
 }

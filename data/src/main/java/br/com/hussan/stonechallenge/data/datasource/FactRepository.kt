@@ -7,10 +7,10 @@ import io.reactivex.Observable
 class FactRepository(private val api: AppApi) : FactDatasource {
 
     override fun getFacts(query: String): Observable<List<Fact>> {
-        return api.getFacts(query)
+        return api.getFacts(query).map { it.result }
     }
 }
 
 interface FactDatasource {
-    fun getFacts(user: String): Observable<List<Fact>>
+    fun getFacts(query: String): Observable<List<Fact>>
 }

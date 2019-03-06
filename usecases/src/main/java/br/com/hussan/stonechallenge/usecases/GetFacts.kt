@@ -5,8 +5,8 @@ import br.com.hussan.stonechallenge.domain.Fact
 import io.reactivex.Observable
 
 class GetFacts(private val dataSource: FactDatasource) {
-    operator fun invoke(user: String): Observable<List<Fact>> {
-        return dataSource.getRepos(user)
+    operator fun invoke(query: String): Observable<List<Fact>> {
+        return dataSource.getFacts(query)
     }
 }
 
