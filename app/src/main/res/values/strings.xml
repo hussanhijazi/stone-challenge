@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Stone Challenge</string>
     <string name="search">Busca</string>
+    <string name="send_to">Enviar</string>
 </resources>
