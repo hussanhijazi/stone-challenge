@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.FactsActivity">
 
+    <include layout="@layout/lyt_loading" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFacts"
         android:layout_width="0dp"
