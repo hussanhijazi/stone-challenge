@@ -38,20 +38,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@{fact.value}"
-                    tools:text="Chuck norris" />
+                    tools:text="@string/app_name" />
 
-                <TextView
-                    android:id="@+id/txtFactCategory"
+                <LinearLayout
+                    android:id="@+id/lytFactCategory"
                     style="@style/fact_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="@{fact.category.toString()}"
+                    android:orientation="horizontal"
                     android:textAllCaps="true"
                     android:visibility="@{fact.category == null ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="Tecnology" />
+                    tools:text="@string/app_name" />
 
                 <ImageView
                     android:id="@+id/imgFactShare"
