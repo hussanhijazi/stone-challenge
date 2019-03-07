@@ -2,7 +2,6 @@ package br.com.hussan.stonechallenge.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -10,10 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.extensions.add
+import br.com.hussan.stonechallenge.extensions.hide
+import br.com.hussan.stonechallenge.extensions.show
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_facts.*
+import kotlinx.android.synthetic.main.lyt_loading.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FactsActivity : AppCompatActivity() {
@@ -30,21 +32,29 @@ class FactsActivity : AppCompatActivity() {
         viewModel.getFacts("car")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ factsAdapter.setItems(it) }, { showError() })
+            .doOnSubscribe { showLoading(true) }
+            .subscribe({ factsAdapter.setItems(it) },
+                {
+                    showLoading(false)
+                    showError()
+                },
+                { showLoading(false) })
             .add(compositeDisposable)
 
 
         viewModel.getCategtories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Log.d("h2", "completed")
-            }, {
-                it.printStackTrace()
-            })
+            .subscribe({}, { showError() })
             .add(compositeDisposable)
     }
 
+    private fun showLoading(show: Boolean) {
+        if (show)
+            progressBar.show()
+        else
+            progressBar.hide()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
