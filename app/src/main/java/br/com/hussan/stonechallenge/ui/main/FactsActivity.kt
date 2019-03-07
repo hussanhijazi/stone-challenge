@@ -12,10 +12,10 @@ import br.com.hussan.stonechallenge.extensions.add
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_facts.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class FactsActivity : AppCompatActivity() {
 
     private val viewModel: FactsViewModel by viewModel()
     private val factsAdapter = FactsAdapter(::shareFact)
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_facts)
         setupRecyclerViewFacts()
 
         viewModel.getFacts("car")

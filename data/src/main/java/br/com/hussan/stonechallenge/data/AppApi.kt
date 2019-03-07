@@ -7,4 +7,7 @@ import retrofit2.http.Query
 interface AppApi {
     @GET("jokes/search")
     fun getFacts(@Query("query") query: String): Observable<FactsResponse>
+
+    @GET("jokes/categories")
+    fun getCategories(): Observable<List<String>>
 }
