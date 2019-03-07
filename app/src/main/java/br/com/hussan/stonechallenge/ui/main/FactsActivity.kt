@@ -2,6 +2,7 @@ package br.com.hussan.stonechallenge.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -30,6 +31,17 @@ class FactsActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ factsAdapter.setItems(it) }, { showError() })
+            .add(compositeDisposable)
+
+
+        viewModel.getCategtories()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("h2", "completed")
+            }, {
+                it.printStackTrace()
+            })
             .add(compositeDisposable)
     }
 
