@@ -1,14 +1,16 @@
 apply plugin: 'java-library'
 apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'kotlin-kapt'
 
 ext {
     retrofitVersion = "2.5.0"
     gsonVersion = "2.8.5"
+    roomVersion = '2.1.0-alpha04'
+
 }
 dependencies {
     implementation project(':domain')
-//    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
@@ -17,5 +19,4 @@ dependencies {
 
     implementation "org.koin:koin-core:$koinVersion"
 
-    
 }

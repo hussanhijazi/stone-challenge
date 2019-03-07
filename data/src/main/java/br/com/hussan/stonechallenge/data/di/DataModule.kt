@@ -8,5 +8,5 @@ import org.koin.dsl.module.module
 
 val dataModule = module {
     single<FactDatasource> { FactRepository(get()) }
-    single<CategoryDatasource> { CategoryRepository(get()) }
+    single<CategoryDatasource> { CategoryRepository(get(), get()) }
 }
