@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="br.com.hussan.stonechallenge.ui.main.MainActivity">
+        <activity android:name="br.com.hussan.stonechallenge.ui.main.FactsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
