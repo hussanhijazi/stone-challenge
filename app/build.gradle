@@ -32,10 +32,16 @@ ext {
     androidxCode = '1.1.0-alpha04'
     constraintLayoutVersion = '1.1.3'
     viewModelVersion = '2.0.0'
+    cardViewVersion = '1.0.0'
+    recyclerViewVersion = '1.0.0'
+    roomVersion = '2.1.0-alpha04'
+
 
     jUnitVersion = '4.12'
     runnerVersion = '1.1.2-alpha01'
     expressoVersion = '3.1.2-alpha01'
+    mockitoVersion = '2.24.5'
+    coreTestingVersion = "1.1.1"
 }
 dependencies {
 
@@ -50,16 +56,19 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel:$viewModelVersion"
+    implementation "androidx.room:room-runtime:$roomVersion"
 
     implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
 
+    implementation "androidx.cardview:cardview:$cardViewVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
     testImplementation "junit:junit:$jUnitVersion"
-    testImplementation "org.mockito:mockito-inline:2.24.5"
-    testImplementation "android.arch.core:core-testing:1.1.1"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "android.arch.core:core-testing:$coreTestingVersion"
 
     androidTestImplementation "androidx.test:runner:$runnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$expressoVersion"
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
 }
