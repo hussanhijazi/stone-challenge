@@ -1,7 +1,7 @@
 package br.com.hussan.cache.stonechallenge.mapper
 
 import br.com.hussan.cache.stonechallenge.model.CategoryEntity
-import br.com.hussan.stonechallenge.data.model.Category
+import br.com.hussan.stonechallenge.domain.Category
 
 class CategoryEntityMapper : EntityMapper<CategoryEntity, Category> {
     override fun mapFromCached(type: CategoryEntity): Category {

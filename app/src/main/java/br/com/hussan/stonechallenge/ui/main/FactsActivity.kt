@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import br.com.hussan.stonechallenge.AppNavigator
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.extensions.add
@@ -16,13 +17,16 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_facts.*
 import kotlinx.android.synthetic.main.lyt_loading.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class FactsActivity : AppCompatActivity() {
 
     private val viewModel: FactsViewModel by viewModel()
     private val factsAdapter = FactsAdapter(::shareFact)
     private val compositeDisposable = CompositeDisposable()
+    private val navigator: AppNavigator by inject { parametersOf(this@FactsActivity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +69,7 @@ class FactsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.search -> {
-                // TODO go to search Activity
+                navigator.goToSearch()
                 true
             }
             else -> super.onOptionsItemSelected(item)
