@@ -6,7 +6,7 @@ import br.com.hussan.stonechallenge.ui.search.SearchActivity
 
 @Suppress("TooManyFunctions")
 class AppNavigator(val activity: Activity) {
-    
+
     fun goToSearch() {
         activity.navigate<SearchActivity>()
     }

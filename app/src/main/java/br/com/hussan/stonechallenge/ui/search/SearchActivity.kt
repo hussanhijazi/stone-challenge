@@ -1,8 +1,11 @@
 package br.com.hussan.stonechallenge.ui.search
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import br.com.hussan.stonechallenge.R
+import kotlinx.android.synthetic.main.activity_search.*
+
 
 class SearchActivity : AppCompatActivity() {
 
@@ -10,6 +13,16 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        setupSearchListener()
+    }
+
+    private fun setupSearchListener() {
+        edtSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                true
+            }
+            false
+        }
     }
 
 }
