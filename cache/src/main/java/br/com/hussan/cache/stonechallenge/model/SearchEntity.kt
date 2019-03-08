@@ -1,0 +1,14 @@
+package br.com.hussan.cache.stonechallenge.model
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.*
+
+
+@Entity(tableName = "search")
+data class SearchEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "query") var query: String,
+    var searchedAt: Date
+)
