@@ -7,6 +7,6 @@ import br.com.hussan.stonechallenge.data.datasource.FactRepository
 import org.koin.dsl.module.module
 
 val dataModule = module {
-    single<FactDatasource> { FactRepository(get()) }
+    single<FactDatasource> { FactRepository(get(), get()) }
     single<CategoryDatasource> { CategoryRepository(get(), get()) }
 }

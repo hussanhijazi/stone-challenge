@@ -1,7 +1,6 @@
 package br.com.hussan.cache.stonechallenge
 
-import br.com.hussan.cache.stonechallenge.mapper.EntityMapper
-import br.com.hussan.cache.stonechallenge.model.CategoryEntity
+import br.com.hussan.cache.stonechallenge.mapper.CategoryEntityMapper
 import br.com.hussan.stonechallenge.data.cache.CategoryCache
 import br.com.hussan.stonechallenge.domain.Category
 import io.reactivex.Completable
@@ -9,11 +8,11 @@ import io.reactivex.Flowable
 
 class CategoryCacheImpl(
     private val db: AppDatabase,
-    private val mapper: EntityMapper<CategoryEntity, Category>
+    private val mapper: CategoryEntityMapper
 ) :
     CategoryCache {
     override fun getCategories(): Flowable<List<Category>> {
-        return db.categoryDao().loadCategories()
+        return db.categoryDao().loadCategories().map { it.map { mapper.mapFromCached(it) } }
     }
 
     override fun saveCategories(categories: List<Category>): Completable {
