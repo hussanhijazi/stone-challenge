@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.databinding.ListItemFactBinding
-import br.com.hussan.stonechallenge.databinding.LytFactCategoriesBinding
 import br.com.hussan.stonechallenge.domain.Fact
 
 class FactsAdapter(private val clickListenerShare: (Fact) -> Unit) :
@@ -37,21 +36,7 @@ class FactsAdapter(private val clickListenerShare: (Fact) -> Unit) :
             clickListenerShare.invoke(fact)
         }
 
-        fact.category?.run {
-            holder.binding.lytFactCategory.removeAllViews()
-            val factCategoryBinding: LytFactCategoriesBinding =
-                DataBindingUtil.inflate(
-                    LayoutInflater.from(holder.binding.root.context),
-                    R.layout.lyt_fact_categories,
-                    null,
-                    false
-                )
-
-            forEach {
-                factCategoryBinding.category = it
-                holder.binding.lytFactCategory.addView(factCategoryBinding.root)
-            }
-        }
+        holder.binding.lytFactCategory.setData(fact.category?.map { it } ?: return)
     }
 
     override fun getItemCount() = facts.size

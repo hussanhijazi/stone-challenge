@@ -30,7 +30,7 @@ class SearchActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                
+                lytCategories.setData(it.map { it.name ?: "" })
             }, {}, {})
             .add(compositeDisposable)
     }
