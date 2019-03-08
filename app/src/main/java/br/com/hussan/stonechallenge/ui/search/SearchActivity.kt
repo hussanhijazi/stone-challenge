@@ -6,15 +6,33 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import br.com.hussan.stonechallenge.R
+import br.com.hussan.stonechallenge.extensions.add
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_search.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
+    private val viewModel: SearchViewModel by viewModel()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
         setupSearchListener()
+        getCategories()
+    }
+
+    private fun getCategories() {
+        viewModel.getCategories()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                
+            }, {}, {})
+            .add(compositeDisposable)
     }
 
     private fun setupSearchListener() {
@@ -28,6 +46,11 @@ class SearchActivity : AppCompatActivity() {
             }
             false
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
     }
 
 }
