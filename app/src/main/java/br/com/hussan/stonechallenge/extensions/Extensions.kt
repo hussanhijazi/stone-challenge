@@ -32,3 +32,28 @@ inline fun <reified T : Activity> Activity.navigate(
         startActivity(this, options?.toBundle())
     }
 }
+
+inline fun <reified T : Activity> Activity.navigateForResult(
+    codeRequest: Int,
+    bundle: Bundle? = null
+) {
+
+    val intent = Intent(this, T::class.java)
+    intent.apply {
+        bundle?.let {
+            putExtras(bundle)
+        }
+        startActivityForResult(this, codeRequest)
+    }
+
+//
+//
+//
+//    val intent = Intent(this, T::class.java)
+//    intent.apply {
+//        bundle?.let {
+//            putExtras(bundle)
+//        }
+//        startActivity(this, options?.toBundle())
+//    }
+}

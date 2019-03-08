@@ -1,13 +1,12 @@
 package br.com.hussan.stonechallenge
 
 import android.app.Activity
-import br.com.hussan.stonechallenge.extensions.navigate
+import br.com.hussan.stonechallenge.extensions.navigateForResult
 import br.com.hussan.stonechallenge.ui.search.SearchActivity
 
-@Suppress("TooManyFunctions")
-class AppNavigator(val activity: Activity) {
+class AppNavigator(private val activity: Activity) {
 
-    fun goToSearch() {
-        activity.navigate<SearchActivity>()
+    fun goToSearch(requestCode: Int) {
+        activity.navigateForResult<SearchActivity>(requestCode)
     }
 }

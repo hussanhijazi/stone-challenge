@@ -1,5 +1,6 @@
 package br.com.hussan.stonechallenge.ui.main
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -21,44 +22,26 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
+
 class FactsActivity : AppCompatActivity() {
 
     private val viewModel: FactsViewModel by viewModel()
-    private val factsAdapter = FactsAdapter(::shareFact)
-    private val compositeDisposable = CompositeDisposable()
+    private val factsAdapter by lazy { FactsAdapter(::shareFact) }
     private val navigator: AppNavigator by inject { parametersOf(this@FactsActivity) }
+    private val compositeDisposable = CompositeDisposable()
+
+    companion object {
+        const val SEARCH_REQUEST = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_facts)
+
         setupRecyclerViewFacts()
-
-        viewModel.getFacts("car")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showLoading(true) }
-            .subscribe({ factsAdapter.setItems(it) },
-                {
-                    showLoading(false)
-                    showError()
-                },
-                { showLoading(false) })
-            .add(compositeDisposable)
-
-
-        viewModel.getCategtories()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, { showError() })
-            .add(compositeDisposable)
+        getCategories()
     }
 
-    private fun showLoading(show: Boolean) {
-        if (show)
-            progressBar.show()
-        else
-            progressBar.hide()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -69,15 +52,50 @@ class FactsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.search -> {
-                navigator.goToSearch()
+                navigator.goToSearch(SEARCH_REQUEST)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SEARCH_REQUEST) {
+                data?.getStringExtra("query")?.let {
+                    viewModel.getFacts(it)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe { showLoading(true) }
+                        .subscribe({ factsAdapter.setItems(it) },
+                            {
+                                showLoading(false)
+                                showError()
+                            },
+                            { showLoading(false) })
+                        .add(compositeDisposable)
+                }
+            }
+        }
+    }
+
+    private fun getCategories() {
+        viewModel.getCategtories()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, { showError() })
+            .add(compositeDisposable)
+    }
+
     private fun showError() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun showLoading(show: Boolean) {
+        if (show)
+            progressBar.show()
+        else
+            progressBar.hide()
     }
 
     private fun shareFact(fact: Fact) {
