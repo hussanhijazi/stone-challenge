@@ -9,7 +9,7 @@
             type="String" />
     </data>
 
-    <TextView
+    <com.google.android.material.chip.Chip
         android:id="@+id/lytFact"
         style="@style/fact_category"
         android:layout_width="wrap_content"

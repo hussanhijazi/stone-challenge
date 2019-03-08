@@ -1,4 +1,4 @@
-package br.com.hussan.stonechallenge.data.model
+package br.com.hussan.stonechallenge.domain
 
 data class Category(
     var id: Int,

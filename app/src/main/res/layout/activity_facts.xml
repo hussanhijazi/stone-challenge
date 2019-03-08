@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.FactsActivity">
 
-    <include layout="@layout/lyt_loading" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFacts"
@@ -22,4 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_item_fact" />
+
+    <include layout="@layout/lyt_loading" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

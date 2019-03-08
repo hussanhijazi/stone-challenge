@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.mock
 import br.com.hussan.stonechallenge.usecases.GetFacts
+import br.com.hussan.stonechallenge.usecases.SaveCategories
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Rule
@@ -16,12 +17,13 @@ class FactsViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val getRepos: GetFacts = mock()
+    private val getFactsCase: GetFacts = mock()
+    private val saveCategoryCase: SaveCategories = mock()
     private lateinit var mViewModel: FactsViewModel
 
     @Before
     fun setUp() {
-        mViewModel = FactsViewModel(getRepos)
+        mViewModel = FactsViewModel(getFactsCase, saveCategoryCase)
     }
 
     @Test
@@ -31,14 +33,14 @@ class FactsViewModelTest {
 
         val repos = listOf(Fact(""))
 
-        `when`(getRepos.invoke(query)).thenReturn(Observable.fromArray(repos))
+        `when`(getFactsCase.invoke(query)).thenReturn(Observable.fromArray(repos))
 
         mViewModel.getFacts(query)
             .test()
             .assertValue(repos)
             .assertComplete()
 
-        verify(getRepos).invoke(query)
+        verify(getFactsCase).invoke(query)
 
     }
 
@@ -48,7 +50,7 @@ class FactsViewModelTest {
         val exception = Exception()
         val query = "car"
 
-        `when`(getRepos.invoke(query)).thenReturn(Observable.error(exception))
+        `when`(getFactsCase.invoke(query)).thenReturn(Observable.error(exception))
 
         mViewModel.getFacts(query)
             .test()
