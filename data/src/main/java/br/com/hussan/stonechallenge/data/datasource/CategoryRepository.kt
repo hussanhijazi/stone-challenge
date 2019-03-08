@@ -6,7 +6,10 @@ import br.com.hussan.stonechallenge.domain.Category
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-class CategoryRepository(private val api: AppApi, private val cache: CategoryCache) : CategoryDatasource {
+class CategoryRepository(
+    private val api: AppApi,
+    private val cache: CategoryCache
+) : CategoryDatasource {
 
     override fun saveCategories(): Completable {
         return if (!cache.isCached()) {
