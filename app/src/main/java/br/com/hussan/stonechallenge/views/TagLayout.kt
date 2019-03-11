@@ -12,10 +12,10 @@ class TagLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ChipGroup(context, attrs, defStyleAttr) {
 
-    fun setData(data: List<String>) {
+    fun setData(data: List<String>, clickListener: ((String) -> Unit)?) {
         removeAllViews()
-        data.forEach {
-            it.run {
+        data.forEach { category ->
+            category.run {
                 val factCategoryBinding: LytFactCategoriesBinding =
                     DataBindingUtil.inflate(
                         LayoutInflater.from(context),
@@ -23,7 +23,10 @@ class TagLayout @JvmOverloads constructor(
                         null,
                         false
                     )
-                factCategoryBinding.category = it
+
+                factCategoryBinding.category = category
+                clickListener?.let { factCategoryBinding.root.setOnClickListener { it(category) } }
+
                 addView(factCategoryBinding.root)
             }
         }
