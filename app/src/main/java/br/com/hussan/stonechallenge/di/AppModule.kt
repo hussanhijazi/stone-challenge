@@ -9,7 +9,7 @@ import org.koin.dsl.module.module
 
 val appModule = module {
     viewModel { FactsViewModel(get(), get()) }
-    viewModel { SearchViewModel(get()) }
+    viewModel { SearchViewModel(get(), get()) }
     single { (activity: FactsActivity) ->
         AppNavigator(activity = activity)
     }

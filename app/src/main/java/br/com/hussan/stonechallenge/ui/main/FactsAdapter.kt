@@ -36,7 +36,7 @@ class FactsAdapter(private val clickListenerShare: (Fact) -> Unit) :
             clickListenerShare.invoke(fact)
         }
 
-        holder.binding.lytFactCategory.setData(fact.category?.map { it } ?: return)
+        holder.binding.lytFactCategory.setData(fact.category?.map { it } ?: return, null)
     }
 
     override fun getItemCount() = facts.size
