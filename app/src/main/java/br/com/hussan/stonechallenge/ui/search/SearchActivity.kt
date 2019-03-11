@@ -3,7 +3,6 @@ package br.com.hussan.stonechallenge.ui.search
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -49,9 +48,7 @@ class SearchActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Log.d("h2", it.toString())
                 searchAdapter.setItems(it)
-                //                lytSearches.setData(it.map { it.query })
             }, {}, {})
             .add(compositeDisposable)
     }

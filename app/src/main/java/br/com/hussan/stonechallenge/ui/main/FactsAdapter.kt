@@ -32,7 +32,7 @@ class FactsAdapter(private val clickListenerShare: (Fact) -> Unit) :
         val fact = facts[position]
         holder.binding.fact = fact
 
-        holder.binding.imgFactShare.setOnClickListener {
+        holder.binding.root.setOnClickListener {
             clickListenerShare.invoke(fact)
         }
 
