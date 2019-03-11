@@ -22,7 +22,6 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-
 class FactsActivity : AppCompatActivity() {
 
     private val viewModel: FactsViewModel by viewModel()
@@ -41,7 +40,6 @@ class FactsActivity : AppCompatActivity() {
         setupRecyclerViewFacts()
         getCategories()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -119,5 +117,3 @@ class FactsActivity : AppCompatActivity() {
         compositeDisposable.clear()
     }
 }
-
-
