@@ -8,11 +8,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import br.com.hussan.stonechallenge.AppNavigator
+import br.com.hussan.stonechallenge.CallbackWrapper
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.extensions.add
 import br.com.hussan.stonechallenge.extensions.hide
 import br.com.hussan.stonechallenge.extensions.show
+import br.com.hussan.stonechallenge.extensions.snack
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.lyt_loading.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+
 
 class FactsActivity : AppCompatActivity() {
 
@@ -61,32 +64,44 @@ class FactsActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SEARCH_REQUEST) {
                 data?.getStringExtra("query")?.let {
-                    viewModel.getFacts(it)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe { showLoading(true) }
-                        .subscribe({ factsAdapter.setItems(it) },
-                            {
-                                showLoading(false)
-                                showError()
-                            },
-                            { showLoading(false) })
-                        .add(compositeDisposable)
+                    getFacts(it)
                 }
             }
         }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState?.let {
+            factsAdapter.setItems(viewModel.getResultFacts().value ?: return)
+        }
+    }
+
+    private fun getFacts(query: String) {
+        viewModel.getFacts(query)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading(true) }
+            .doOnComplete { showLoading(false) }
+            .doOnError { showLoading(false) }
+            .subscribeWith(object : CallbackWrapper<List<Fact>>(::showError) {
+                override fun onSuccess(t: List<Fact>) {
+                    factsAdapter.setItems(t)
+                }
+            })
+            .add(compositeDisposable)
     }
 
     private fun getCategories() {
         viewModel.getCategtories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, { showError() })
+            .subscribe()
             .add(compositeDisposable)
     }
 
-    private fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun showError(error: Throwable) {
+        lytRoot.snack(R.string.error_message)
     }
 
     private fun showLoading(show: Boolean) {

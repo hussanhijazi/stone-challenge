@@ -3,16 +3,37 @@ package br.com.hussan.stonechallenge.extensions
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.app.ActivityOptionsCompat
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 
-fun Int.pxToSp(): Float = this / Resources.getSystem().displayMetrics.scaledDensity
+inline fun View.snack(@StringRes messageRes: Int, length: Int = Snackbar.LENGTH_LONG) {
+    snack(resources.getString(messageRes), length)
+}
+
+inline fun View.snack(
+    message: String,
+    length: Int = Snackbar.LENGTH_LONG
+) {
+    val snack = Snackbar.make(this, message, length)
+    snack.show()
+}
+
+fun Snackbar.action(@StringRes actionRes: Int, color: Int? = null, listener: (View) -> Unit) {
+    action(view.resources.getString(actionRes), color, listener)
+}
+
+fun Snackbar.action(action: String, color: Int? = null, listener: (View) -> Unit) {
+    setAction(action, listener)
+    color?.let { setActionTextColor(color) }
+}
+
 fun Float.spToPx(context: Context) =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this, context.resources.displayMetrics)
 
