@@ -1,6 +1,5 @@
 apply plugin: 'java-library'
 apply plugin: 'org.jetbrains.kotlin.jvm'
-apply plugin: 'kotlin-kapt'
 
 ext {
     retrofitVersion = "2.5.0"

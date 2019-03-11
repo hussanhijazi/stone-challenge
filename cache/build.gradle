@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+
 ext {
     roomVersion = '2.1.0-alpha04'
-
 }
 android {
     compileSdkVersion 28
