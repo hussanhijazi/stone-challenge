@@ -12,9 +12,9 @@ class TagLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ChipGroup(context, attrs, defStyleAttr) {
 
-    fun setData(data: List<String>, clickListener: ((String) -> Unit)?) {
+    fun setData(tags: List<String>, clickListener: ((String) -> Unit)?) {
         removeAllViews()
-        data.forEach { category ->
+        tags.forEach { category ->
             category.run {
                 val factCategoryBinding: LytFactCategoriesBinding =
                     DataBindingUtil.inflate(
