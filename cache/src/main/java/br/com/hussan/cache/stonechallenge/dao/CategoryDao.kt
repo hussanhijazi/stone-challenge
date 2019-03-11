@@ -12,7 +12,7 @@ interface CategoryDao {
     @Insert
     fun insertAll(categories: List<CategoryEntity>): Completable
 
-    @Query("SELECT * from category LIMIT 8")
+    @Query("SELECT * from category order by RANDOM() LIMIT 8")
     fun loadCategories(): Flowable<List<CategoryEntity>>
 
 }
