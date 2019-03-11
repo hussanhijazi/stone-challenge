@@ -35,10 +35,12 @@
 
                 <TextView
                     android:id="@+id/txtFact"
-                    style="@style/TextAppearance.AppCompat.Medium"
+                    style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@{fact.value}"
+                    android:textSize="@dimen/result_font_80"
+                    app:setFontSize="@{fact.value}"
                     tools:text="@string/app_name" />
 
                 <br.com.hussan.stonechallenge.views.TagLayout

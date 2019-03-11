@@ -1,12 +1,20 @@
 package br.com.hussan.stonechallenge.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+
+
+fun Int.pxToSp(): Float = this / Resources.getSystem().displayMetrics.scaledDensity
+fun Float.spToPx(context: Context) =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, this, context.resources.displayMetrics)
 
 fun Disposable.add(compositeDisposable: CompositeDisposable) {
     compositeDisposable.add(this)
