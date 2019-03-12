@@ -23,7 +23,6 @@ class FactsViewModelTest {
 
     @Before
     fun setUp() {
-        mViewModel = FactsViewModel(getFactsCase, saveCategoryCase)
     }
 
     @Test

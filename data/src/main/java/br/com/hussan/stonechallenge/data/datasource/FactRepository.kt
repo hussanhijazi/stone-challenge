@@ -14,7 +14,18 @@ class FactRepository(private val api: AppApi, private val cache: SearchCache) : 
     override fun getFacts(query: String): Observable<List<Fact>> {
         return api.getFacts(query).map { it.result }
             .retryWhen(RetryWithDelay(listOf(4, 8)))
-            .doOnNext { cache.saveSearch(Search(query, Date())).subscribe() }
+//            .doOnNext { cache.saveSearch(Search(query, Date())).subscribe() }
+
+            .flatMap {
+                Observable.fromCallable {
+                    cache.saveSearch(Search(query, Date()))
+                    it
+                }
+            }
+//            .flatMapCompletable {
+//                cache.saveSearch(Search(query, Date()))
+////                    .subscribe()
+//            }.toObservable()
     }
 }
 
