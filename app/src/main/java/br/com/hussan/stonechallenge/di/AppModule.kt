@@ -8,7 +8,7 @@ import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val appModule = module {
-    viewModel { FactsViewModel(get(), get()) }
+    viewModel { FactsViewModel(get(), get(), get()) }
     viewModel { SearchViewModel(get(), get()) }
     single { (activity: FactsActivity) ->
         AppNavigator(activity = activity)
