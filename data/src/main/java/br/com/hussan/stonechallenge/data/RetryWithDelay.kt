@@ -11,9 +11,6 @@ import java.util.concurrent.TimeUnit
 
 class RetryWithDelay(private val maxRetries: List<Int>) :
     Function<Observable<out Throwable>, Observable<*>> {
-    private var retryCount: Int = -1
-
-
     override fun apply(attempts: Observable<out Throwable>): Observable<*> {
         return attempts
             .zipWith(
@@ -29,37 +26,14 @@ class RetryWithDelay(private val maxRetries: List<Int>) :
                             Observable.timer(time, TimeUnit.SECONDS)
                         }
                         is HttpException -> {
-//                            if ((item.first as HttpException).code() in 500..598)
-                            Observable.timer(time, TimeUnit.SECONDS)
-//                            else Observable.error(Exception())
+                            if ((item.first as HttpException).code() in 500..598)
+                                Observable.timer(time, TimeUnit.SECONDS)
+                            else Observable.error(Exception())
                         }
                         else -> Observable.error(Exception())
                     }
                 } else Observable.error(Exception())
             }
-//            .flatMap {
-//                when (it) {
-//                    is SocketException,
-//                    is SocketTimeoutException,
-//                    is UnknownHostException -> {
-//                        retry(it)
-//                    }
-//                    is HttpException -> {
-//                        if (it.code() in 500..598)
-//                            retry(it)
-//                        else Observable.error(it)
-//                    }
-//                    else -> Observable.error(it)
-//                }
-//            }
     }
 
-    private fun retry(throwable: Throwable): Observable<Long>? {
-        return if (++retryCount < maxRetries.size) {
-            Observable.timer(
-                maxRetries[retryCount].toLong(),
-                TimeUnit.SECONDS
-            )
-        } else Observable.error(throwable)
-    }
 }

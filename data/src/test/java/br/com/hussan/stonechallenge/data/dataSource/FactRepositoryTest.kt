@@ -1,16 +1,16 @@
-package br.com.hussan.stonechallenge.data
+package br.com.hussan.stonechallenge.data.dataSource
 
-import br.com.hussan.stonechallenge.data.cache.SearchCache
+import br.com.hussan.stonechallenge.data.AppApi
+import br.com.hussan.stonechallenge.data.FactsResponse
+import br.com.hussan.stonechallenge.data.datasource.FactDatasource
 import br.com.hussan.stonechallenge.data.datasource.FactRepository
 import br.com.hussan.stonechallenge.domain.Fact
 import com.google.gson.Gson
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.TestScheduler
-import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,15 +20,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
 @RunWith(JUnit4::class)
-class HttpTest {
-    //    @get:Rule
-//    var instantTaskExecutorRule = InstantTaskExecutorRule()
-    lateinit var repository: FactRepository
-    lateinit var mockServer: MockWebServer
+class FactRepositoryTest {
+
+    lateinit var repository: FactDatasource
     lateinit var api: AppApi
-    lateinit var cache: SearchCache
+    lateinit var mockServer: MockWebServer
     lateinit var gson: Gson
 
 
@@ -37,7 +34,6 @@ class HttpTest {
     fun setUp() {
 
         gson = Gson()
-        cache = mock()
 
         mockServer = MockWebServer()
         val baseURL = mockServer.url("/").toString()
@@ -59,7 +55,7 @@ class HttpTest {
     }
 
     @Test
-    fun `Test search fact term`() {
+    fun `Get facts remote`() {
 
         val testObserver = TestObserver<List<Fact>>()
         val factResponse = FactsResponse(10, listOf(Fact("Chuck Norris")))
@@ -80,32 +76,7 @@ class HttpTest {
         testObserver.assertValueCount(1)
 
         val request = mockServer.takeRequest()
-        assertEquals(path, request.path)
+        TestCase.assertEquals(path, request.path)
     }
 
-    @Test
-    fun `Test search fact term with error`() {
-        val query = "query"
-        val path = "/jokes/search?query=$query"
-        val testScheduler = TestScheduler()
-
-        val mockResponse = MockResponse()
-            .setResponseCode(500)
-
-        mockServer.enqueue(mockResponse)
-
-        val testObserver = repository.getFacts(query)
-            .test()
-            .assertEmpty()
-
-        val request = mockServer.takeRequest()
-        assertEquals(path, request.path)
-
-    }
-
-    @After
-    @Throws
-    fun tearDown() {
-        mockServer.shutdown()
-    }
 }
