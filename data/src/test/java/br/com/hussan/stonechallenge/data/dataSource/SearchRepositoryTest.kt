@@ -13,7 +13,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
-import java.util.Date
 
 @RunWith(JUnit4::class)
 class SearchRepositoryTest {
@@ -34,13 +33,13 @@ class SearchRepositoryTest {
     @Test
     fun `Get searches locally`() {
 
-        val searches = listOf(Search("search", Date()))
+        val searches = listOf(Search("search"))
 
         `when`(cache.getSearches()).thenReturn(Flowable.just(searches))
 
-        val testObserver = repository.getSearches().test()
-
-        testObserver.assertValue(searches)
+        repository.getSearches().test().apply {
+            assertValue(searches)
+        }
 
         verify(cache).getSearches()
     }
@@ -52,16 +51,16 @@ class SearchRepositoryTest {
 
         `when`(cache.getSearches()).thenReturn(Flowable.error(exception))
 
-        val testObserver = repository.getSearches().test()
+        repository.getSearches().test()
+            .assertError(exception)
 
-        testObserver.assertError(exception)
 
         verify(cache).getSearches()
     }
 
     @Test
     fun `Save search locally`() {
-        val search = Search("search", Date())
+        val search = Search("search")
 
         `when`(cache.saveSearch(search)).thenReturn(Completable.complete())
 
@@ -75,14 +74,13 @@ class SearchRepositoryTest {
     @Test
     fun `Save search locally with error`() {
 
-        val search = Search("search", Date())
+        val search = Search("search")
         val exception = Exception()
 
         `when`(cache.saveSearch(search)).thenReturn(Completable.error(exception))
 
-        val testObserver = repository.saveSearch(search).test()
+        repository.saveSearch(search).test().assertError(exception)
 
-        testObserver.assertError(exception)
         verify(cache).saveSearch(search)
     }
 }

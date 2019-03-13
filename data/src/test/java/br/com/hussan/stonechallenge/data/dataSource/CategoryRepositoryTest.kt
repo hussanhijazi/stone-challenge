@@ -6,11 +6,9 @@ import br.com.hussan.stonechallenge.data.datasource.CategoryDatasource
 import br.com.hussan.stonechallenge.data.datasource.CategoryRepository
 import br.com.hussan.stonechallenge.data.mock
 import br.com.hussan.stonechallenge.domain.Category
-import br.com.hussan.stonechallenge.domain.Fact
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.observers.TestObserver
 import junit.framework.TestCase
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -76,9 +74,6 @@ class CategoryRepositoryTest {
 
     @Test
     fun `Get Categories remote and Save`() {
-
-        val testObserver = TestObserver<List<Fact>>()
-
         val categoriesApi = listOf("Chuck Norris")
         val categories = listOf(Category(1, "Chuck Norris"))
         val path = "/jokes/categories"
@@ -92,11 +87,12 @@ class CategoryRepositoryTest {
         `when`(cache.isCached()).thenReturn(false)
         `when`(cache.saveCategories(categories)).thenReturn(Completable.complete())
 
-        repository.saveCategories().subscribe(testObserver)
+        repository.saveCategories().test().apply {
+            awaitTerminalEvent(1, TimeUnit.SECONDS)
+            assertNoErrors()
+            assertComplete()
+        }
 
-        testObserver.awaitTerminalEvent(1, TimeUnit.SECONDS)
-        testObserver.assertNoErrors()
-        testObserver.assertComplete()
         verify(cache).isCached()
         verify(cache).saveCategories(categories)
 
@@ -111,9 +107,9 @@ class CategoryRepositoryTest {
 
         `when`(cache.isCached()).thenReturn(true)
 
-        val testObserver = repository.saveCategories().test()
-
-        testObserver.assertComplete()
+        repository.saveCategories().test().apply {
+            assertComplete()
+        }
 
         verify(cache).isCached()
     }

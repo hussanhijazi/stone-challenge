@@ -7,7 +7,10 @@ import io.reactivex.Flowable
 
 class SearchRepository(private val cache: SearchCache) : SearchDatasource {
     override fun getSearches(): Flowable<List<Search>> = cache.getSearches()
-    override fun saveSearch(search: Search) = cache.saveSearch(search)
+    override fun saveSearch(search: Search): Completable {
+        print("saveSearch invoce")
+        return cache.saveSearch(search)
+    }
 
 }
 

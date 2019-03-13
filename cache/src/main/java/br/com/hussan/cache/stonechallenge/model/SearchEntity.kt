@@ -3,7 +3,7 @@ package br.com.hussan.cache.stonechallenge.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
+import java.util.Date
 
 
 @Entity(tableName = "search")

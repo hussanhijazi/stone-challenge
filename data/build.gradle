@@ -1,18 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'org.jetbrains.kotlin.jvm'
 
-ext {
-    retrofitVersion = "2.5.0"
-    gsonVersion = "2.8.5"
-    roomVersion = '2.1.0-alpha04'
-
-    jUnitVersion = '4.12'
-    runnerVersion = '1.1.2-alpha01'
-    expressoVersion = '3.1.2-alpha01'
-    mockitoVersion = '2.24.5'
-    coreTestingVersion = "1.1.1"
-
-}
 dependencies {
     implementation project(':domain')
 
@@ -26,7 +14,7 @@ dependencies {
     testImplementation "junit:junit:$jUnitVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation "android.arch.core:core-testing:$coreTestingVersion"
-    
+
     implementation "org.koin:koin-core:$koinVersion"
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.13.1'
 
