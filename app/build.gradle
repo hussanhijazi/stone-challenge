@@ -61,18 +61,6 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$expressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$expressoVersion"
 
-    // Testing-only dependencies
-//    androidTestImplementation "android.arch.core:core-testing:$coreTestingVersion"
-//    androidTestImplementation "org.koin:koin-test:1.0.2"
-//    androidTestImplementation 'androidx.test:core:1.1.0'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-//    androidTestImplementation 'androidx.test:runner:1.1.1'
-//    androidTestImplementation 'androidx.test:rules:1.1.1'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-//    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
-//    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-
     debugImplementation "com.amitshekhar.android:debug-db:$dbDebug"
 
 }
