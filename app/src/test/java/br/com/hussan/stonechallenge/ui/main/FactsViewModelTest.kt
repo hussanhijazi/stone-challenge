@@ -1,5 +1,6 @@
 package br.com.hussan.stonechallenge.ui.main
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.domain.Search
 import br.com.hussan.stonechallenge.usecases.GetFacts
@@ -9,12 +10,14 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import mock
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 
 class FactsViewModelTest {
-
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
     private val getFactsCase: GetFacts = mock()
     private val saveCategoryCase: SaveCategories = mock()
     private var saveSearch: SaveSearch = mock()
