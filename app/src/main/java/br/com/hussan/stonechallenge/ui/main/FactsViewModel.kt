@@ -8,7 +8,6 @@ import br.com.hussan.stonechallenge.usecases.GetFacts
 import br.com.hussan.stonechallenge.usecases.SaveCategories
 import br.com.hussan.stonechallenge.usecases.SaveSearch
 import io.reactivex.Observable
-import java.util.Date
 
 class FactsViewModel(
     private val getFactsCase: GetFacts,
@@ -21,8 +20,9 @@ class FactsViewModel(
     fun getFacts(query: String) = getFactsCase.invoke(query)
         .doOnNext {
             results.postValue(it)
-        }.flatMap { data ->
-            saveSearchCase.invoke(Search(query, Date())).andThen(Observable.just(data))
+        }
+        .flatMap { data ->
+            saveSearchCase(Search(query)).andThen(Observable.just(data))
         }
 
     fun getCategtories() = saveCategoriesCase.invoke()
