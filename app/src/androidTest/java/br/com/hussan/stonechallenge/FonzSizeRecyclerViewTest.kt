@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class FonzSizeRecyclerViewTest {
 
     @get:Rule
     var activityRule: ActivityScenarioRule<FactsActivity> = ActivityScenarioRule(FactsActivity::class.java)
