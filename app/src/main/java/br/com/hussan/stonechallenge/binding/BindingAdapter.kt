@@ -15,3 +15,4 @@ fun TextView.setFontSize(text: String?) {
     else
         BIG_FONT.spToPx(context)
 }
+
