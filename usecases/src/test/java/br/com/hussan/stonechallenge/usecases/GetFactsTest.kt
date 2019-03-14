@@ -25,7 +25,7 @@ class GetFactsTest {
     fun `Get facts with api`() {
 
         val query = "query"
-        val facts = listOf(Fact("Fact"))
+        val facts = listOf(Fact("", "Fact"))
         `when`(repository.getFacts(query)).thenReturn(Observable.just(facts))
 
         getFacts.invoke(query).test()
