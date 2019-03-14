@@ -3,10 +3,13 @@ package br.com.hussan.cache.stonechallenge.di
 import androidx.room.Room.databaseBuilder
 import br.com.hussan.cache.stonechallenge.AppDatabase
 import br.com.hussan.cache.stonechallenge.CategoryCacheImpl
+import br.com.hussan.cache.stonechallenge.FactCacheImpl
 import br.com.hussan.cache.stonechallenge.SearchCacheImpl
 import br.com.hussan.cache.stonechallenge.mapper.CategoryEntityMapper
+import br.com.hussan.cache.stonechallenge.mapper.FactEntityMapper
 import br.com.hussan.cache.stonechallenge.mapper.SearchEntityMapper
 import br.com.hussan.stonechallenge.data.cache.CategoryCache
+import br.com.hussan.stonechallenge.data.cache.FactCache
 import br.com.hussan.stonechallenge.data.cache.SearchCache
 import org.koin.dsl.module.module
 
@@ -21,6 +24,8 @@ val cacheModule = module {
 
     single { SearchEntityMapper() }
 
+    single { FactEntityMapper() }
+
 
     single<CategoryCache> {
         CategoryCacheImpl(get(), get())
@@ -28,5 +33,9 @@ val cacheModule = module {
 
     single<SearchCache> {
         SearchCacheImpl(get(), get())
+    }
+
+    single<FactCache> {
+        FactCacheImpl(get(), get())
     }
 }

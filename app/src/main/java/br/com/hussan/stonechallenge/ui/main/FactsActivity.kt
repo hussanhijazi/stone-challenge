@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import br.com.hussan.stonechallenge.AppNavigator
-import br.com.hussan.stonechallenge.CallbackWrapper
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.extensions.add
@@ -34,6 +33,7 @@ class FactsActivity : AppCompatActivity() {
 
     companion object {
         const val SEARCH_REQUEST = 1
+        const val QUERY = "query"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class FactsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SEARCH_REQUEST) {
-                data?.getStringExtra("query")?.let {
+                data?.getStringExtra(QUERY)?.let {
                     getFacts(it)
                 }
             }
@@ -84,16 +84,14 @@ class FactsActivity : AppCompatActivity() {
             .doOnSubscribe { showLoading(true) }
             .doOnComplete { showLoading(false) }
             .doOnError { showLoading(false) }
-            .subscribeWith(object : CallbackWrapper<List<Fact>>(::showError) {
-                override fun onSuccess(t: List<Fact>) {
-                    factsAdapter.setItems(t)
-                }
-            })
+            .subscribe({
+                factsAdapter.setItems(it)
+            }, ::showError)
             .add(compositeDisposable)
     }
 
     private fun getCategories() {
-        viewModel.getCategtories()
+        viewModel.getCategories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()

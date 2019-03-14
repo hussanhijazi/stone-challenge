@@ -25,7 +25,7 @@ class FactsViewModel(
             saveSearchCase(Search(query)).andThen(Observable.just(data))
         }
 
-    fun getCategtories() = saveCategoriesCase.invoke()
+    fun getCategories() = saveCategoriesCase.invoke()
 
     fun getResultFacts() = results
 }

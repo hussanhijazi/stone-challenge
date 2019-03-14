@@ -1,4 +1,4 @@
-package br.com.hussan.myarchstone
+package br.com.hussan.stonechallenge
 
 import android.app.Application
 import br.com.hussan.cache.stonechallenge.di.cacheModule
@@ -12,7 +12,6 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin(this, listOf(appModule, useCaseModule, apiModule, dataModule, cacheModule))
-
 
     }
 }

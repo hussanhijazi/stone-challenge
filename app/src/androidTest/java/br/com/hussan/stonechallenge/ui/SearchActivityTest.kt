@@ -1,4 +1,4 @@
-package br.com.hussan.stonechallenge.ui.main
+package br.com.hussan.stonechallenge.ui
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
