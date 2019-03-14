@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import br.com.hussan.stonechallenge.AppNavigator
-import br.com.hussan.stonechallenge.CallbackWrapper
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.domain.Fact
 import br.com.hussan.stonechallenge.extensions.add
@@ -84,11 +83,9 @@ class FactsActivity : AppCompatActivity() {
             .doOnSubscribe { showLoading(true) }
             .doOnComplete { showLoading(false) }
             .doOnError { showLoading(false) }
-            .subscribeWith(object : CallbackWrapper<List<Fact>>(::showError) {
-                override fun onSuccess(t: List<Fact>) {
-                    factsAdapter.setItems(t)
-                }
-            })
+            .subscribe({
+                factsAdapter.setItems(it)
+            }, ::showError)
             .add(compositeDisposable)
     }
 

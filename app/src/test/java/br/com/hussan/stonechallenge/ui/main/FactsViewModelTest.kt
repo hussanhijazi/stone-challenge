@@ -33,7 +33,7 @@ class FactsViewModelTest {
 
         val query = "car"
 
-        val facts = listOf(Fact("Fact"))
+        val facts = listOf(Fact("Fact", ""))
         val search = Search(query)
         `when`(getFactsCase.invoke(query)).thenReturn(Observable.fromArray(facts))
         `when`(saveSearch.invoke(search)).thenReturn(Completable.complete())

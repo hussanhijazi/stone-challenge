@@ -28,11 +28,11 @@ class RetryWithDelay(private val maxRetries: List<Int>) :
                         is HttpException -> {
                             if ((item.first as HttpException).code() in 500..598)
                                 Observable.timer(time, TimeUnit.SECONDS)
-                            else Observable.error(Exception())
+                            else Observable.error(item.first)
                         }
-                        else -> Observable.error(Exception())
+                        else -> Observable.error(item.first)
                     }
-                } else Observable.error(Exception())
+                } else Observable.error(item.first)
             }
     }
 

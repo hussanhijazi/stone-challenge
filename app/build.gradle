@@ -50,9 +50,7 @@ dependencies {
     testImplementation "junit:junit:$jUnitVersion"
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation "android.arch.core:core-testing:$coreTestingVersion"
-
-    androidTestImplementation "org.koin:koin-test:$koinVersion"
-
+    
     androidTestImplementation "androidx.test:core:$androidXTest"
     androidTestImplementation "androidx.test:runner:$androidXTest"
     androidTestImplementation "androidx.test:rules:$androidXTest"
