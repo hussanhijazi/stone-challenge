@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.domain.Search
 import br.com.hussan.stonechallenge.extensions.add
+import br.com.hussan.stonechallenge.ui.main.FactsActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -82,7 +83,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setQuery(query: String) {
         val returnIntent = Intent()
-        returnIntent.putExtra("query", query)
+        returnIntent.putExtra(FactsActivity.QUERY, query)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
     }

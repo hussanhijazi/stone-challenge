@@ -6,6 +6,5 @@ import io.reactivex.Flowable
 
 interface FactCache {
     fun saveFacts(facts: List<Fact>): Completable
-    fun isCached(): Boolean
     fun getFacts(query: String): Flowable<List<Fact>>
 }

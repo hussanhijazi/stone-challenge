@@ -20,9 +20,4 @@ class FactCacheImpl(
             mapper.mapToCached(it)
         })
     }
-
-    override fun isCached(): Boolean {
-        return db.query("SELECT id from fact", null).count > 0
-    }
-
 }

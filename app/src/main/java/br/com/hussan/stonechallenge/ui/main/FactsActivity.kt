@@ -33,6 +33,7 @@ class FactsActivity : AppCompatActivity() {
 
     companion object {
         const val SEARCH_REQUEST = 1
+        const val QUERY = "query"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +63,7 @@ class FactsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SEARCH_REQUEST) {
-                data?.getStringExtra("query")?.let {
+                data?.getStringExtra(QUERY)?.let {
                     getFacts(it)
                 }
             }
