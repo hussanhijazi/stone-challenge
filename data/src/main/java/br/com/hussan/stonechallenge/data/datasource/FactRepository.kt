@@ -27,8 +27,15 @@ class FactRepository(
                 factCache.saveFacts(factsWithQuery).andThen(Observable.just(it))
             }
     }
+
+    override fun getRandomFacts(): Observable<List<Fact>> {
+
+        return factCache.getRandomFacts().toObservable()
+
+    }
 }
 
 interface FactDatasource {
     fun getFacts(query: String): Observable<List<Fact>>
+    fun getRandomFacts(): Observable<List<Fact>>
 }

@@ -42,6 +42,8 @@ class FactsActivity : AppCompatActivity() {
 
         setupRecyclerViewFacts()
         getCategories()
+        getRandomFacts()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -84,6 +86,16 @@ class FactsActivity : AppCompatActivity() {
             .doOnSubscribe { showLoading(true) }
             .doOnComplete { showLoading(false) }
             .doOnError { showLoading(false) }
+            .subscribe({
+                factsAdapter.setItems(it)
+            }, ::showError)
+            .add(compositeDisposable)
+    }
+
+    private fun getRandomFacts() {
+        viewModel.getRandomFacts()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 factsAdapter.setItems(it)
             }, ::showError)

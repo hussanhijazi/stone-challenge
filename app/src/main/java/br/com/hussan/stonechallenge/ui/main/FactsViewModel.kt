@@ -25,6 +25,10 @@ class FactsViewModel(
             saveSearchCase(Search(query)).andThen(Observable.just(data))
         }
 
+    fun getRandomFacts(): Observable<List<Fact>> {
+        return getFactsCase.getRandomFacts()
+    }
+
     fun getCategories() = saveCategoriesCase.invoke()
 
     fun getResultFacts() = results
