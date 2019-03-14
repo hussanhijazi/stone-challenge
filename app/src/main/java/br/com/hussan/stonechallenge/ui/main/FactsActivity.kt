@@ -65,6 +65,7 @@ class FactsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SEARCH_REQUEST) {
+                factsAdapter.setItems(listOf())
                 data?.getStringExtra(QUERY)?.let {
                     getFacts(it)
                 }

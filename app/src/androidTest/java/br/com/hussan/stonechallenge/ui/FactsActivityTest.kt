@@ -37,14 +37,13 @@ class FactsActivityTest {
 
     @Test
     fun checkTextSizeRecyclerView() {
-        onView(withId(R.id.search)).perform(click())
+        val recyclerView = activityRule.activity.findViewById<RecyclerView>(R.id.rvFacts)
 
+        onView(withId(R.id.search)).perform(click())
         onView(withId(R.id.edtSearch))
-            .perform(typeText("car"), pressImeActionButton())
+            .perform(typeText("travel"), pressImeActionButton())
 
         onView(withId(R.id.rvFacts)).check(matches((isDisplayed())))
-
-        val recyclerView = activityRule.activity.findViewById<RecyclerView>(R.id.rvFacts)
 
         for (position in 0 until (recyclerView.adapter?.itemCount ?: 0)) {
             scrollAndCheckTextSize(R.id.rvFacts, position, R.id.txtFact)

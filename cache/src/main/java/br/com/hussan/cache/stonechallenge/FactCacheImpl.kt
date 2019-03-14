@@ -19,8 +19,8 @@ class FactCacheImpl(
         return db.factDao().loadFacts(query).map { it.map { mapper.mapFromCached(it) } }
     }
 
-    override fun saveFacts(categories: List<Fact>): Completable {
-        return db.factDao().insertAll(categories.map {
+    override fun saveFacts(facts: List<Fact>): Completable {
+        return db.factDao().insertAll(facts.map {
             mapper.mapToCached(it)
         })
     }
