@@ -16,4 +16,7 @@ interface FactDao {
     @Query("SELECT * from fact WHERE term = :term")
     fun loadFacts(term: String): Flowable<List<FactEntity>>
 
+    @Query("SELECT * from fact order by RANDOM() LIMIT 10")
+    fun loadRandomFacts(): Flowable<List<FactEntity>>
+
 }

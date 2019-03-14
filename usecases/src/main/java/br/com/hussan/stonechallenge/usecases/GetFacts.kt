@@ -8,5 +8,9 @@ class GetFacts(private val dataSource: FactDatasource) {
     operator fun invoke(query: String): Observable<List<Fact>> {
         return dataSource.getFacts(query)
     }
+
+    fun getRandomFacts(): Observable<List<Fact>> {
+        return dataSource.getRandomFacts()
+    }
 }
 

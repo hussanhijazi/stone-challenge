@@ -11,6 +11,10 @@ class FactCacheImpl(
     private val mapper: FactEntityMapper
 ) :
     FactCache {
+    override fun getRandomFacts(): Flowable<List<Fact>> {
+        return db.factDao().loadRandomFacts().map { it.map { mapper.mapFromCached(it) } }
+    }
+
     override fun getFacts(query: String): Flowable<List<Fact>> {
         return db.factDao().loadFacts(query).map { it.map { mapper.mapFromCached(it) } }
     }
@@ -20,4 +24,5 @@ class FactCacheImpl(
             mapper.mapToCached(it)
         })
     }
+
 }
