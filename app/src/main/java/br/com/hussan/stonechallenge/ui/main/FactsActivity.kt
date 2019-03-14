@@ -90,7 +90,7 @@ class FactsActivity : AppCompatActivity() {
     }
 
     private fun getCategories() {
-        viewModel.getCategtories()
+        viewModel.getCategories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()

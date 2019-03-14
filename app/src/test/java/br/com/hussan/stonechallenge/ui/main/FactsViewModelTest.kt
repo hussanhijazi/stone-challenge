@@ -66,7 +66,7 @@ class FactsViewModelTest {
 
         `when`(saveCategoryCase.invoke()).thenReturn(Completable.complete())
 
-        mViewModel.getCategtories()
+        mViewModel.getCategories()
             .test()
             .assertNoValues()
             .assertComplete()

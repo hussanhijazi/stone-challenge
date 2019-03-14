@@ -1,4 +1,4 @@
-package br.com.hussan.stonechallenge.ui.main
+package br.com.hussan.stonechallenge.ui
 
 import android.view.View
 import android.widget.TextView
@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import br.com.hussan.stonechallenge.R
 import br.com.hussan.stonechallenge.extensions.checkTextSize
+import br.com.hussan.stonechallenge.ui.main.FactsActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.junit.Before
