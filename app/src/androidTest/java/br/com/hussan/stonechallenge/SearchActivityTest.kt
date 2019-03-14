@@ -33,7 +33,7 @@ class SearchActivityTest {
     }
 
     @Test
-    fun itemInMiddleOfList_hasSpecialText() {
+    fun checkDuplicatesSearches() {
         onView(withId(R.id.rvSearches)).check(matches((isDisplayed())))
         onView(withId(R.id.rvSearches)).check(matches(checkDuplicatedText()))
 
