@@ -1,0 +1,90 @@
+package br.com.hussan.stonechallenge.data.dataSource
+
+import br.com.hussan.stonechallenge.data.AppApi
+import br.com.hussan.stonechallenge.data.FactsResponse
+import br.com.hussan.stonechallenge.data.cache.SearchCache
+import br.com.hussan.stonechallenge.data.datasource.FactDatasource
+import br.com.hussan.stonechallenge.data.datasource.FactRepository
+import br.com.hussan.stonechallenge.data.mock
+import br.com.hussan.stonechallenge.domain.Fact
+import br.com.hussan.stonechallenge.domain.Search
+import com.google.gson.Gson
+import io.reactivex.Completable
+import okhttp3.OkHttpClient
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
+import org.mockito.Mockito.`when`
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
+@RunWith(JUnit4::class)
+class FactRepositoryTest {
+
+    lateinit var repository: FactDatasource
+    lateinit var api: AppApi
+    lateinit var mockServer: MockWebServer
+    lateinit var gson: Gson
+    lateinit var cache: SearchCache
+
+
+    @Before
+    @Throws
+    fun setUp() {
+
+        gson = Gson()
+        cache = mock()
+
+        mockServer = MockWebServer()
+        val baseURL = mockServer.url("/").toString()
+
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(baseURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+        api = retrofit.create(AppApi::class.java)
+
+        repository = FactRepository(api, cache)
+
+    }
+
+    @Test
+    fun `Get facts remote`() {
+
+        val factResponse = FactsResponse(10, listOf(Fact("Chuck Norris")))
+        val query = "query"
+        val path = "/jokes/search?query=$query"
+        val search = Search(query)
+
+
+        val mockResponse = MockResponse()
+            .setResponseCode(200)
+            .setBody(gson.toJson(factResponse))
+        mockServer.enqueue(mockResponse)
+
+        `when`(cache.saveSearch(search)).thenReturn(Completable.complete())
+
+        repository.getFacts(query).test().apply {
+            awaitTerminalEvent(1, TimeUnit.SECONDS)
+            assertValue(factResponse.result)
+            assertNoErrors()
+            assertValueCount(1)
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(path, request.path)
+    }
+
+}

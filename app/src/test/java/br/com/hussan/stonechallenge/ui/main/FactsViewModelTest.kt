@@ -2,42 +2,45 @@ package br.com.hussan.stonechallenge.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.hussan.stonechallenge.domain.Fact
-import br.com.hussan.stonechallenge.mock
+import br.com.hussan.stonechallenge.domain.Search
 import br.com.hussan.stonechallenge.usecases.GetFacts
 import br.com.hussan.stonechallenge.usecases.SaveCategories
+import br.com.hussan.stonechallenge.usecases.SaveSearch
+import io.reactivex.Completable
 import io.reactivex.Observable
+import mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 
-
 class FactsViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
-
     private val getFactsCase: GetFacts = mock()
     private val saveCategoryCase: SaveCategories = mock()
+    private var saveSearch: SaveSearch = mock()
     private lateinit var mViewModel: FactsViewModel
 
     @Before
     fun setUp() {
-        mViewModel = FactsViewModel(getFactsCase, saveCategoryCase)
+        mViewModel = FactsViewModel(getFactsCase, saveCategoryCase, saveSearch)
     }
 
     @Test
-    fun `Get User repositories when OK`() {
+    fun `Get facts using query`() {
 
         val query = "car"
 
-        val repos = listOf(Fact(""))
-
-        `when`(getFactsCase.invoke(query)).thenReturn(Observable.fromArray(repos))
+        val facts = listOf(Fact("Fact"))
+        val search = Search(query)
+        `when`(getFactsCase.invoke(query)).thenReturn(Observable.fromArray(facts))
+        `when`(saveSearch.invoke(search)).thenReturn(Completable.complete())
 
         mViewModel.getFacts(query)
             .test()
-            .assertValue(repos)
+            .assertValue(facts)
             .assertComplete()
 
         verify(getFactsCase).invoke(query)
@@ -45,7 +48,7 @@ class FactsViewModelTest {
     }
 
     @Test
-    fun `User repositories when error`() {
+    fun `Get facts using query with error`() {
 
         val exception = Exception()
         val query = "car"
@@ -55,6 +58,20 @@ class FactsViewModelTest {
         mViewModel.getFacts(query)
             .test()
             .assertError(exception)
+
+    }
+
+    @Test
+    fun `Get_save categories`() {
+
+        `when`(saveCategoryCase.invoke()).thenReturn(Completable.complete())
+
+        mViewModel.getCategtories()
+            .test()
+            .assertNoValues()
+            .assertComplete()
+
+        verify(saveCategoryCase).invoke()
 
     }
 }

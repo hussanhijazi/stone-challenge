@@ -1,4 +1,4 @@
-package br.com.hussan.stonechallenge
+package br.com.hussan.stonechallenge.usecases
 
 import org.mockito.Mockito
 

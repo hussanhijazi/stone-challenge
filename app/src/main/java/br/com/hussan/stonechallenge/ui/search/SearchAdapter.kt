@@ -41,4 +41,5 @@ class SearchAdapter(private val clickListenerShare: (Search) -> Unit) :
 
     override fun getItemCount() = searches.size
 
+    fun getSearches() = searches
 }
