@@ -8,6 +8,7 @@ import br.com.hussan.stonechallenge.usecases.GetFacts
 import br.com.hussan.stonechallenge.usecases.SaveCategories
 import br.com.hussan.stonechallenge.usecases.SaveSearch
 import io.reactivex.Observable
+import io.reactivex.Single
 
 class FactsViewModel(
     private val getFactsCase: GetFacts,
@@ -25,7 +26,7 @@ class FactsViewModel(
             saveSearchCase(Search(query)).andThen(Observable.just(data))
         }
 
-    fun getRandomFacts(): Observable<List<Fact>> {
+    fun getRandomFacts(): Single<List<Fact>> {
         return getFactsCase.getRandomFacts()
     }
 

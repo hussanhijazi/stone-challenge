@@ -5,6 +5,7 @@ import br.com.hussan.stonechallenge.data.RetryWithDelay
 import br.com.hussan.stonechallenge.data.cache.FactCache
 import br.com.hussan.stonechallenge.domain.Fact
 import io.reactivex.Observable
+import io.reactivex.Single
 
 class FactRepository(
     private val api: AppApi, private val factCache: FactCache
@@ -28,14 +29,12 @@ class FactRepository(
             }
     }
 
-    override fun getRandomFacts(): Observable<List<Fact>> {
-
-        return factCache.getRandomFacts().toObservable()
-
+    override fun getRandomFacts(): Single<List<Fact>> {
+        return factCache.getRandomFacts()
     }
 }
 
 interface FactDatasource {
     fun getFacts(query: String): Observable<List<Fact>>
-    fun getRandomFacts(): Observable<List<Fact>>
+    fun getRandomFacts(): Single<List<Fact>>
 }
