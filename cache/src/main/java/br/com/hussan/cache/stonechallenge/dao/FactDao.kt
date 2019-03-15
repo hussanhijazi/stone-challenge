@@ -7,6 +7,7 @@ import androidx.room.Query
 import br.com.hussan.cache.stonechallenge.model.FactEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface FactDao {
@@ -17,6 +18,6 @@ interface FactDao {
     fun loadFacts(term: String): Flowable<List<FactEntity>>
 
     @Query("SELECT * from fact order by RANDOM() LIMIT 10")
-    fun loadRandomFacts(): Flowable<List<FactEntity>>
+    fun loadRandomFacts(): Single<List<FactEntity>>
 
 }

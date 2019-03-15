@@ -5,13 +5,14 @@ import br.com.hussan.stonechallenge.data.cache.FactCache
 import br.com.hussan.stonechallenge.domain.Fact
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 class FactCacheImpl(
     private val db: AppDatabase,
     private val mapper: FactEntityMapper
 ) :
     FactCache {
-    override fun getRandomFacts(): Flowable<List<Fact>> {
+    override fun getRandomFacts(): Single<List<Fact>> {
         return db.factDao().loadRandomFacts().map { it.map { mapper.mapFromCached(it) } }
     }
 
