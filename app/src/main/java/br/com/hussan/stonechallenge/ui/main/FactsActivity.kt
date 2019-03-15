@@ -66,6 +66,7 @@ class FactsActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SEARCH_REQUEST) {
                 factsAdapter.setItems(listOf())
+                lytEmptyState.hide()
                 data?.getStringExtra(QUERY)?.let {
                     getFacts(it)
                 }
