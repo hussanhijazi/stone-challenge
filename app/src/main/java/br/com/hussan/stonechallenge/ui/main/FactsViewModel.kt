@@ -19,11 +19,12 @@ class FactsViewModel(
     private val results = MutableLiveData<List<Fact>>()
 
     fun getFacts(query: String) = getFactsCase.invoke(query)
-        .doOnNext {
-            results.postValue(it)
-        }
+        .doOnNext { results.postValue(it) }
         .flatMap { data ->
-            saveSearchCase(Search(query)).andThen(Observable.just(data))
+            if (data.isNotEmpty())
+                saveSearchCase(Search(query)).andThen(Observable.just(data))
+            else
+                Observable.just(data)
         }
 
     fun getRandomFacts(): Single<List<Fact>> {
