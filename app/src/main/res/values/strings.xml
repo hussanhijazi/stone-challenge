@@ -7,4 +7,5 @@
     <string name="past_searches">Past Searches</string>
     <string name="uncategorized">Uncategorized</string>
     <string name="error_message">Houve um erro, tente novamente</string>
+    <string name="no_results">A sua pesquisa não retornou nenhum registro, tente novamente.</string>
 </resources>

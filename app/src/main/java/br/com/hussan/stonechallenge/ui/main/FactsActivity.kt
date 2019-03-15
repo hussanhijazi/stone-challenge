@@ -87,9 +87,7 @@ class FactsActivity : AppCompatActivity() {
             .doOnSubscribe { showLoading(true) }
             .doOnComplete { showLoading(false) }
             .doOnError { showLoading(false) }
-            .subscribe({
-                factsAdapter.setItems(it)
-            }, ::showError)
+            .subscribe(::showFacts, ::showError)
             .add(compositeDisposable)
     }
 
@@ -109,6 +107,24 @@ class FactsActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
             .add(compositeDisposable)
+    }
+
+    private fun showFacts(list: List<Fact>) {
+        if (list.isNotEmpty()) {
+            factsAdapter.setItems(list)
+            showRecyclerViewFacts()
+        } else
+            showEmptyState()
+    }
+
+    private fun showEmptyState() {
+        rvFacts.hide()
+        lytEmptyState.show()
+    }
+
+    private fun showRecyclerViewFacts() {
+        rvFacts.show()
+        lytEmptyState.hide()
     }
 
     private fun showError(error: Throwable) {
